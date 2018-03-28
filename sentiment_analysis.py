@@ -12,7 +12,7 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"/home/saubin/credentials/Learni
 client = language.LanguageServiceClient()
 
 # The text to analyze
-text = u'No matter how hard I try, I keep losing at Starcraft!'
+text = u'it was super awesome seeing Jasmine again'
 document = types.Document(
     content=text,
     type=enums.Document.Type.PLAIN_TEXT)
@@ -21,4 +21,5 @@ document = types.Document(
 sentiment = client.analyze_sentiment(document=document).document_sentiment
 
 print('Text: {}'.format(text))
-print('Sentiment: {}, {}'.format(sentiment.score, sentiment.magnitude))
+print('Sentiment score:', sentiment.score)
+print('Sentiment magnitude:', sentiment.magnitude))

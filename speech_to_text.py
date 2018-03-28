@@ -14,7 +14,7 @@ client = speech.SpeechClient()
 # The name of the audio file to transcribe
 file_name = os.path.join(
     os.path.dirname(__file__),
-    'data/speech/jasmine.flac')
+    'data', 'speech', 'jasmine.flac')
 
 # Loads the audio into memory
 with io.open(file_name, 'rb') as audio_file:
