@@ -14,7 +14,7 @@ client = vision.ImageAnnotatorClient()
 # The name of the image file to annotate
 file_name = os.path.join(
     os.path.dirname(__file__),
-    'data/images/happy.jpg')
+    'data/images/sad_angry.jpg')
 
 # Loads the image into memory
 with io.open(file_name, 'rb') as image_file:
@@ -31,11 +31,7 @@ likelihood_name = ('UNKNOWN', 'VERY_UNLIKELY', 'UNLIKELY', 'POSSIBLE',
 print('Faces:')
 
 for face in faces:
-    print('anger: {}'.format(likelihood_name[face.anger_likelihood]))
-    print('joy: {}'.format(likelihood_name[face.joy_likelihood]))
-    print('surprise: {}'.format(likelihood_name[face.surprise_likelihood]))
-
-    vertices = (['({},{})'.format(vertex.x, vertex.y)
-                for vertex in face.bounding_poly.vertices])
-
-    print('face bounds: {}'.format(','.join(vertices)))
+    print('sorrow:', likelihood_name[face.sorrow_likelihood])
+    print('anger:', likelihood_name[face.anger_likelihood])
+    print('joy:', likelihood_name[face.joy_likelihood])
+    print('surprise:', likelihood_name[face.surprise_likelihood])
