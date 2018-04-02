@@ -6,20 +6,22 @@ from google.cloud.language import enums
 from google.cloud.language import types
 
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"/home/saubin/credentials/Learning Night-8b61b06f75e6.json"
-
-# Instantiates a client
-client = language.LanguageServiceClient()
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.path.join(
+    "C:\\", "Users", "mr_bo",
+    "credentials", "Learning Night-2adf2eb95ca0.json")
 
 # The text to analyze
-text = u'it was super awesome seeing Jasmine again'
+text = 'it was super awesome seeing Jasmine again'
+# Detect the sentiment of the text
+client = language.LanguageServiceClient()
 document = types.Document(
     content=text,
     type=enums.Document.Type.PLAIN_TEXT)
-
-# Detects the sentiment of the text
 sentiment = client.analyze_sentiment(document=document).document_sentiment
 
-print('Text: {}'.format(text))
+print('Text:', text)
+# Sentiment score ranges from -1 to 1
+# Negative score is a negative emotion. Positive score is a positive emotion.
 print('Sentiment score:', sentiment.score)
-print('Sentiment magnitude:', sentiment.magnitude))
+# Sentiment magnitude is how strongly the emotion is felt.
+print('Sentiment magnitude:', sentiment.magnitude)

@@ -6,30 +6,30 @@ from google.cloud import vision
 from google.cloud.vision import types
 
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"/home/saubin/credentials/Learning Night-8b61b06f75e6.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.path.join(
+    "C:\\", "Users", "mr_bo",
+    "credentials", "Learning Night-2adf2eb95ca0.json")
 
-# Instantiates a client
-client = vision.ImageAnnotatorClient()
-
-# The name of the image file to annotate
+# The name of the image file into memory
 file_name = os.path.join(
     os.path.dirname(__file__),
     'data', 'images', 'sad_angry.jpg')
-
-# Loads the image into memory
 with io.open(file_name, 'rb') as image_file:
     content = image_file.read()
 
+# Instantiate the client and send the request
+client = vision.ImageAnnotatorClient()
 image = types.Image(content=content)
-
+# Detects the face and it's attributes
 response = client.face_detection(image=image)
 faces = response.face_annotations
 
 # Names of likelihood from google.cloud.vision.enums
-likelihood_name = ('UNKNOWN', 'VERY_UNLIKELY', 'UNLIKELY', 'POSSIBLE',
-                    'LIKELY', 'VERY_LIKELY')
+likelihood_name = ('UNKNOWN', 'VERY_UNLIKELY', 'UNLIKELY',
+                   'POSSIBLE', 'LIKELY', 'VERY_LIKELY')
 print('Faces:')
 
+# Technically, more than one face can be detected
 for face in faces:
     print('sorrow:', likelihood_name[face.sorrow_likelihood])
     print('anger:', likelihood_name[face.anger_likelihood])

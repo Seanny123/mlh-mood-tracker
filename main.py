@@ -3,11 +3,14 @@
 import io
 import os
 
-from google.cloud import speech
-from google.cloud import vision
-from google.cloud import language
+from google.cloud import speech, vision, language
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"/home/saubin/credentials/Learning Night-8b61b06f75e6.json"
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.path.join(
+    "/home",
+    "saubin",
+    "credentials",
+    "Learning Night-8b61b06f75e6.json")
 
 
 def emotion_from_photo(client, file_name):
@@ -22,7 +25,7 @@ def emotion_from_photo(client, file_name):
 
     # Names of likelihood from google.cloud.vision.enums
     likelihood_name = ('UNKNOWN', 'VERY_UNLIKELY', 'UNLIKELY', 'POSSIBLE',
-                        'LIKELY', 'VERY_LIKELY')
+                       'LIKELY', 'VERY_LIKELY')
 
     assert len(faces) == 1
     face = faces[0]
@@ -51,8 +54,8 @@ def text_from_speech(client, file_name):
 
 def emotion_from_text(client, text):
     document = language.types.Document(
-    content=text,
-    type=language.enums.Document.Type.PLAIN_TEXT)
+        content=text,
+        type=language.enums.Document.Type.PLAIN_TEXT)
 
     # Detects the sentiment of the text
     sentiment = client.analyze_sentiment(document=document).document_sentiment
@@ -76,7 +79,8 @@ audio_file_name = os.path.join(
     os.path.dirname(__file__),
     'data', 'speech', 'jasmine.flac')
 
-speech_emo = emotion_from_text(text_client, text_from_speech(speech_client, audio_file_name))
+speech_text = text_from_speech(speech_client, audio_file_name)
+speech_emo = emotion_from_text(text_client, speech_text)
 
 print(img_emo)
 print(speech_emo)
